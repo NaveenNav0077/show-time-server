@@ -66,6 +66,7 @@ app.get('/movies',(req,res)=>{
 
 //movies/sort?attribute=ratings?sort=asd
 //movies/sort?attribute=name?sort=dsd
+
 app.get('/movies/sort',(req,res)=>{
     const { attribute , type } = req.query;
     MoviesList.mergeSortRun(attribute, type)
