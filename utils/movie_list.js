@@ -9,6 +9,10 @@ class LinkedList{
     constructor(){
         this.head=null;
         this.size=0;
+        this.sort={
+            attribute:"ratings",
+            type:"asd"
+        }
     }
 
     insertNode(data){
@@ -69,6 +73,84 @@ class LinkedList{
         } else {
             console.log("You have only 1 - "+this.size+" elements!")
         }
+    }
+
+    findMid(nodes){
+        let slow = nodes;
+        let fast = nodes.next;
+        while(fast !=null && fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        } 
+        return slow
+    }
+
+    findSortAttributeMin(L, R){
+        let result = false;
+        if(this.sort.type=="asd"){
+            if(this.sort.attribute=="ratings"){
+                if(L.data.ratings < R.data.ratings){
+                    result=true;
+                }
+            } 
+            if(this.sort.attribute=="name"){
+                if(L.data.name < R.data.name){
+                    result=true;
+                }
+            }
+        } 
+        if(this.sort.type=="dsd") {
+            if(this.sort.attribute=="ratings"){
+                if(L.data.ratings > R.data.ratings){
+                    result=true;
+                }
+            } 
+            if(this.sort.attribute=="name"){
+                if(L.data.name > R.data.name){
+                    result=true;
+                }
+            }
+        }
+        return result;
+    }
+
+    merge(L, R){
+        if(L===null){
+            return R
+        }
+        if(R===null){
+            return L
+        }
+        let node;
+        if(this.findSortAttributeMin(L, R)){
+            node = L;
+            node.next = this.merge(L.next, R)
+        } else {
+            node = R;
+            node.next = this.merge(L, R.next)
+        }
+        return node;
+    }
+
+    mergeSort(nodes){
+        if(nodes===null || nodes.next ===null){
+            return nodes;
+        }
+        let L = nodes;
+        let mid = this.findMid(nodes)
+        let R = mid.next;
+        mid.next=null;
+        L = this.mergeSort(L)
+        R = this.mergeSort(R)
+        return this.merge(L, R);
+    }
+
+    mergeSortRun(attribute, type){      
+        if(attribute!==null && attribute!==undefined && type !==null && type !== undefined){
+            this.sort.attribute=attribute;
+            this.sort.type=type;
+        }
+        this.head = this.mergeSort(this.head)
     }
 
     deleteAtIndex(idx){
