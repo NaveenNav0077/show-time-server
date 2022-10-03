@@ -57,7 +57,7 @@ const movies = [
         format:"2D IMAX",
         duration:"2hrs 30 mins",
         genre:"Action, Thriller",
-        ratings:88
+        ratings: 77
     },
     {
         movie_id:"7",
